@@ -60,19 +60,28 @@
   var submit = $('button');
   submit.on('click', function(event) {
     var userInput = $('#search').val();
-    var $getDat = $.getJSON(`http://www.omdbapi.com/?t=${userInput}`);
+    var $getDat = $.getJSON(`http://www.omdbapi.com/?s=${userInput}`);
     event.preventDefault();
     $getDat.done(function(data){
-      var movie = {
-        id : data.imdbID,
-        poster : data.Poster,
-        title : data.Title,
-        year : data.Year,
-        plot: data.Plot
-      };
-      console.log(movie);
-      movies.push(movie);
-      renderMovies();
+      var info = data.Search;
+      // console.log(data);
+      for (var i = 0; i < info.length; i++) {
+        // console.log(movie);
+        var imdb = info[i].imdbID;
+        var $getMore = $.getJSON(`http://www.omdbapi.com/?i=${imdb}`);
+        $getMore.done(function(more) {
+          var movie = {
+            id : imdb,
+            poster : more.Poster,
+            title : more.Title,
+            year : more.Year,
+            plot: more.Plot
+          };
+          movies.push(movie);
+          renderMovies();
+        });
+
+      }
     });
   });
 })();
