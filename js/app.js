@@ -53,10 +53,17 @@
       $('#listings').append($col);
 
       $('.modal-trigger').leanModal();
-      console.log($modal);
     }
   };
+
   var userInput = $('#search').val();
+  var input = $('input');
+  $('input:text').click(
+    function(){
+        $(this).val('');
+        movies.length = 0;
+
+    });
   var submit = $('button');
   submit.on('click', function(event) {
     var userInput = $('#search').val();
