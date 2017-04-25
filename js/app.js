@@ -75,10 +75,12 @@
       for (var i = 0; i < info.length; i++) {
         // console.log(movie);
         var imdb = info[i].imdbID;
+        // console.log(imdb);
         var $getMore = $.getJSON(`http://www.omdbapi.com/?i=${imdb}`);
         $getMore.done(function(more) {
+          console.log(more);
           var movie = {
-            id : imdb,
+            id : more.imdbID,
             poster : more.Poster,
             title : more.Title,
             year : more.Year,
