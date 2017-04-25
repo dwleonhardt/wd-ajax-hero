@@ -53,8 +53,26 @@
       $('#listings').append($col);
 
       $('.modal-trigger').leanModal();
+      console.log($modal);
     }
   };
-
-  // ADD YOUR CODE HERE
+  var userInput = $('#search').val();
+  var submit = $('button');
+  submit.on('click', function(event) {
+    var userInput = $('#search').val();
+    var $getDat = $.getJSON(`http://www.omdbapi.com/?t=${userInput}`);
+    event.preventDefault();
+    $getDat.done(function(data){
+      var movie = {
+        id : data.imdbID,
+        poster : data.Poster,
+        title : data.Title,
+        year : data.Year,
+        plot: data.Plot
+      };
+      console.log(movie);
+      movies.push(movie);
+      renderMovies();
+    });
+  });
 })();
